@@ -1,0 +1,18 @@
+{% if jobs_list %}
+    <table border="1">
+        <tr>
+            <th>job_id</th><th>job_name</th><th>cron 表达式</th><th>运行状态</th><th>描述</th>
+        </tr>
+        {% for job in jobs_list %}
+            <tr>
+                <td><a href="{% url 'cronjob:detail11' job.id %}">{{ job.id }}</a></td>
+                <td><a href="{% url 'cronjob:detail22' job.id %}">{{ job.name }}</a></td>
+                <td>{{job.cron_expr}}</td>
+                <td>{{job.status}}</td>
+                <td>{{job.description}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No jobs found.</p>
+{% endif %}
