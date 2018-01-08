@@ -154,6 +154,6 @@ CART_SESSION_ID = 'cart'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = "mail.ehousechina.com"
 EMAIL_PORT = 25  # default 25
-EMAIL_HOST_USER = '******'
+EMAIL_HOST_USER = 'bianyunpeng@ehousechina.com'
 EMAIL_HOST_PASSWORD = '******'
 # EMAIL_USE_SSL = True
