@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="/static/css/pageturn.css" type="text/css" />
+</head>
+<body>
+
+<table>
+<tr>
+    <th>数字</th>
+    <th>字符串</th>
+</tr>
+    {% if datas %}
+        {% for data in datas %}
+            <tr>
+            <td>{{ data.data_int }}</td>
+            <td>{{ data.data_string }}</td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+</table>
+
+<div class="pagination">
+    <span class="step-link">
+        {% if datas.has_previous %}
+            <a href="?page_num={{ datas.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ datas.number }} of {{ datas.paginator.num_pages }}
+        </span>
+
+        {% if datas.has_next %}
+            <a href="?page_num={{ datas.next_page_number }}">next</a>
+        {% endif %}
+
+    </span>
+</div>
+
+<div class="pageturn">
+    <ul class="pagelist">
+        {% if datas.has_previous %}
+            <li class="long"><a href="?page_num={{ datas.previous_page_number }}" rel="external nofollow">上一页</a></li>
+        {% endif %}
+
+        {% for page in datas.paginator.page_range %}
+            {% if page %}
+                {% ifequal page datas.number %}
+                    <li class="active"><a href="?page_num={{ page }}" rel="exteranl nofollow">{{ page }}</a></li>
+                {% else %}
+                    <li><a href="?page_num={{ page }}" rel="exteranl nofollow">{{ page }}</a></li>
+                {% endifequal %}
+            {% else %}
+                <li class="none"><a href="">...</a></li>
+            {% endif %}
+        {% endfor %}
+
+        {% if datas.has_next %}
+            <li class="long"><a href="?page_num={{ datas.next_page_number }}">下一页</a></li>
+        {% endif %}
+        第{{ datas.number }}页, 共{{ datas.paginator.num_pages }}页
+    </ul>
+</div>
+
+</body>
+</html>
