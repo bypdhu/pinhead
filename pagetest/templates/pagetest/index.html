@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<table>
+<tr>
+    <th>数字</th>
+    <th>字符串</th>
+</tr>
+    {% if datas %}
+        {% for data in datas %}
+            <tr>
+            <td>{{ data.data_int }}</td>
+            <td>{{ data.data_string }}</td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+</table>
+
+</body>
+</html>

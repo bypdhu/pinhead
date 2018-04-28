@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'ess.apps.EssConfig',
     'key_value.apps.KeyValueConfig',
     'mycronjob.apps.MycronjobConfig',
+    'pagetest.apps.PagetestConfig',
 
     'django.contrib.admin',
     'django.contrib.auth',
