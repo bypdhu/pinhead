@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>job histories</title>
+</head>
+<body>
+
+{% if job %}
+job_id: {{ job.id }}  job_name: {{job.name}}
+<table>
+    <tr>
+        <th>序号</th>
+        <th>时间</th>
+    </tr>
+    {% for history in histories %}
+    <tr>
+        <td>{{ history.number }}</td>
+        <td>{{ history.time }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+no job found
+{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ess tools -- buckets</title>
+    <style>
+        .topmenu {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #777;
+        }
+
+        .topmenu li {
+            float: left;
+        }
+
+        .topmenu li a {
+            display: inline-block;
+            color: white;
+            text-align: center;
+            padding: 16px;
+            text-decoration: none;
+        }
+
+        .topmenu li a.active {
+            color: white;
+            background-color: #4CAF50;
+        }
+
+        .topmenu li a:hover {
+            background-color: #222;
+        }
+    </style>
+    <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.min.js"></script>
+
+</head>
+<body>
+<div>
+
+
+<ul class="topmenu">
+  <li><a href="{% url 'ess:download' %}" class="active">下载</a></li>
+  <li><a href="{% url 'ess:upload' %}">上传</a></li>
+  <li><a href="{% url 'ess:bucket' %}">查看BUCKET</a></li>
+</ul>
+</div>
+
+<div>
+    <input type="button" onclick="showElement(new Array('bucket_info', 'bucket_post'))" value="+ 新的Bucket"/>
+    <p id="bucket_info" hidden="true">
+        <br />
+        填入bucket信息 <br />
+        name: <input type="text" id="bucket_name" > <br />
+        key: <input type="text" id="bucket_key" > <br />
+        secret: <input type="text" id="bucket_secret" > <br />
+    </p>
+    <input type="button" id="bucket_post" onclick="addBucket()" value="提交" hidden="true"/>
+</div>
+<div>
+    <table border="1">
+        <tr>
+            <th>name</th><th>key</th><th>secret</th><th>status</th>
+        </tr>
+        {% for bucket in buckets %}
+        <tr>
+            <td>{{ bucket.name }}</td>
+            <td>{{ bucket.access_key }}</td>
+            <td>******</td>
+            <td>{{ bucket.status }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+</body>
+<script>
+    function myrefresh()
+    {
+       window.location.reload();
+    }
+    function showElement(eles) {
+//        console.log(eles);
+        for (i in eles){
+//            console.log(eles[i]);
+            document.getElementById(eles[i]).style.display="inline";
+        }
+
+    }
+
+    function addBucket_callback(data){
+        if (data.status == 0) {
+            myrefresh();
+            alert("添加成功")
+        } else {
+            alert("!!!添加失败!!!\nmsg:"+data.msg.toString()+"\nstatus:"+data.status.toString())
+        }
+    }
+
+    function addBucket() {
+        var name = document.getElementById('bucket_name').value;
+        var key = document.getElementById('bucket_key').value;
+        var pass = document.getElementById('bucket_secret').value;
+
+        var json_obj = {
+            'name': name,
+            'key': key,
+            'pass': pass
+        };
+        var json_str = JSON.stringify(json_obj);
+
+        var post_url = "{% url 'ess:bucket_create' %}";
+
+        $.post(post_url, json_str, addBucket_callback, 'json')
+    }
+
+</script>
+</html>
