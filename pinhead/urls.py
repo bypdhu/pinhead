@@ -51,6 +51,10 @@ urlpatterns = [
     url(r'^shop/', include('myshop.urls')),
     #####################################
 
+    ######## url for pagetest ################
+    url(r'^pagetest/', include('pagetest.urls')),
+    #####################################
+
     #######  url for all   ##########
     url(r'^', include('all.urls')),
     #################################
