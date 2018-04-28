@@ -25,5 +25,6 @@ def index(request):
         {'name': 'key value', 'url': '/keyvalue'},
         {'name': 'my cron job', 'url': '/cronjob'},
         {'name': 'my shop', 'url': '/shop'},
+        {'name': 'page test', 'url': '/pagetest'},
     ]
     return render(request, 'all/index.html', {'apps': apps})
