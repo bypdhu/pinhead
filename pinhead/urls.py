@@ -55,9 +55,16 @@ urlpatterns = [
     url(r'^pagetest/', include('pagetest.urls')),
     #####################################
 
+    ######## url for restapp ################
+    url(r'^restapp/', include('restapp.urls')),
+    #####################################
+
     #######  url for all   ##########
     url(r'^', include('all.urls')),
     #################################
+
+
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 
 ]
 

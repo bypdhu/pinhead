@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'key_value.apps.KeyValueConfig',
     'mycronjob.apps.MycronjobConfig',
     'pagetest.apps.PagetestConfig',
+    'restapp.apps.RestappConfig',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -46,7 +47,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
 ]
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    # 'DEFAULT_RENDERER_CLASSES': (
+    #     'rest_framework.renderers.JSONRenderer',
+    # ),
+    # 'DEFAULT_PARSER_CLASSES': (
+    #     'rest_framework.parsers.JSONParser',
+    # )
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
