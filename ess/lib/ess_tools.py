@@ -22,6 +22,7 @@ import mimetypes
 
 VERSION = '1.0.0'
 
+
 def init_logger(path):
     log_formatter = "%(asctime)s | %(levelname)s - %(message)s"
     date_formatter = "%Y-%m-%d %H:%M:%S"
@@ -38,6 +39,7 @@ def init_logger(path):
                             format=log_formatter, datefmt=date_formatter)
         log = logging.getLogger('esstools-%s' % VERSION)
     return log
+
 
 LOGGER_PATH = "/data/logs/esstools/logs"
 LOGGER = init_logger(LOGGER_PATH)
@@ -107,7 +109,7 @@ class Tools(object):
         canonicalized_headers = str(kwargs.get("CanonicalizedHeaders", ""))
         bucket_name = str(kwargs.get("BucketName", ""))
         file_key = str(kwargs.get("FileKey", ""))
-        canonicalized_resource = "/" + ( bucket_name + "/" if bucket_name else "") + file_key
+        canonicalized_resource = "/" + (bucket_name + "/" if bucket_name else "") + file_key
 
         pre_sign = method + "\n" \
                    + content_md5 + "\n" \
@@ -173,13 +175,11 @@ class Tools(object):
         else:
             return {}
 
-
     def print_http_response(self, url, r):
         print("response: {0}, url: {1}, headers: {2}".format(r, url, str(r.headers)))
         if str(r.status_code) != '200':
             print("content: {0}".format(r.content))
             print("text: {0}".format(r.text))
-
 
     def handle_http_kwargs(self, kwargs):
         if kwargs.get("headers", ""):
@@ -470,8 +470,6 @@ class EssWrapper(BaseHttp, TestImpl):
         return rr
 
 
-
-
 def test():
     ml = EssWrapper()
 
@@ -488,6 +486,7 @@ def test():
 
     print ml.get_variables_from_yaml("..\\Variables\\constants_test.yml")
 
+
 def test_for_put_test():
     ml = EssWrapper()
     fileKey = "test/test1/test2/test_1M.tar.gz"
@@ -500,25 +499,26 @@ def test_for_put_test():
     # contentType = ml.guess_type_from_file(dataFile)
     md5 = ml.get_file_md5(dataFile)
     kwargs1 = {
-                  'AccessKeyId': bucket.get('key'),
-                  'AccessKeySecret': bucket.get('pass'),
-                  'Method': 'PUT',
-                  # 'Content-Type': contentType,
-                  'Content-MD5': md5,
-                  'Date': date,
-                  # 'CanonicalizedHeaders': '',
-                  'BucketName': bucket.get('bucket'),
-                  'FileKey': fileKey,
-                  # 'CanonicalizedResource': '/' + bucket.get('bucket') + '/' + fileKey
+        'AccessKeyId': bucket.get('key'),
+        'AccessKeySecret': bucket.get('pass'),
+        'Method': 'PUT',
+        # 'Content-Type': contentType,
+        'Content-MD5': md5,
+        'Date': date,
+        # 'CanonicalizedHeaders': '',
+        'BucketName': bucket.get('bucket'),
+        'FileKey': fileKey,
+        # 'CanonicalizedResource': '/' + bucket.get('bucket') + '/' + fileKey
 
     }
     print(kwargs1)
-    headers = { 'Date': date,
-                # 'Content-Type': contentType,
-                'Authorization': ml.get_authorization(**kwargs1),
-                'Content-MD5': md5
+    headers = {'Date': date,
+               # 'Content-Type': contentType,
+               'Authorization': ml.get_authorization(**kwargs1),
+               'Content-MD5': md5
                }
     ml.put_test(url, dataFile=dataFile, headers=headers, expectStatusCode=200)
+
 
 def test_outer_get_with_auth():
     ml = EssWrapper()
@@ -629,6 +629,7 @@ def test_for_post_test():
 
     print(ml.post_test(url, dataFile=dataFile, contentType='guess', headers=None, json=None))
 
+
 def test_for_post_test2():
     ml = EssWrapper()
     C = ml.get_variables_from_yaml("..\\Variables\\constants.yml")
@@ -641,29 +642,30 @@ def test_for_post_test2():
     contentType = "multipart/form-data"
     md5 = ml.get_file_md5(dataFile)
     kwargs1 = {
-                  'AccessKeyId': C.get('priw').get('key'),
-                  'AccessKeySecret': C.get('priw').get('pass'),
-                  'Method': 'POST',
-                  'Content-Type': contentType,
-                  'Content-MD5': md5,
-                  'Date': date,
-                  'CanonicalizedHeaders': '',
-                  'BucketName': 'test2',
-                  'FileKey': '',
-                  # 'CanonicalizedResource': '/test2/test.png'
+        'AccessKeyId': C.get('priw').get('key'),
+        'AccessKeySecret': C.get('priw').get('pass'),
+        'Method': 'POST',
+        'Content-Type': contentType,
+        'Content-MD5': md5,
+        'Date': date,
+        'CanonicalizedHeaders': '',
+        'BucketName': 'test2',
+        'FileKey': '',
+        # 'CanonicalizedResource': '/test2/test.png'
 
     }
     print(kwargs1)
-    headers = { 'Date': date,
-                'Content-Type': contentType,
-                'Authorization': ml.get_authorization(**kwargs1),
-                 'Content-MD5': md5
+    headers = {'Date': date,
+               'Content-Type': contentType,
+               'Authorization': ml.get_authorization(**kwargs1),
+               'Content-MD5': md5
                }
     ml.post_test(url, dataFile=dataFile, headers=headers, contentType="guess")
 
 
 def get_bucket_from_url(url):
     return url.split("//")[1].split(".")[0]
+
 
 if __name__ == '__main__':
     # test()
