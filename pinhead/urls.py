@@ -59,6 +59,11 @@ urlpatterns = [
     url(r'^restapp/', include('restapp.urls')),
     #####################################
 
+    ######## url for filetrans ################
+    url(r'^filetrans/', include('filetrans.urls')),
+    #####################################
+
+
     #######  url for all   ##########
     url(r'^', include('all.urls')),
     #################################
