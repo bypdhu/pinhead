@@ -27,5 +27,6 @@ def index(request):
         {'name': 'my shop', 'url': '/shop'},
         {'name': 'page test', 'url': '/pagetest'},
         {'name': 'rest app', 'url': '/restapp'},
+        {'name': 'file trans', 'url': '/filetrans'},
     ]
     return render(request, 'all/index.html', {'apps': apps})
