@@ -10,8 +10,10 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 
+@login_required(login_url='/myuser/login')
 def index(request):
     apps = [
         # these four usage are all OK.. when used in html like <a href="{{url}}" />

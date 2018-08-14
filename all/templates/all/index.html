@@ -5,17 +5,20 @@
     <title>All Apps</title>
 </head>
 <body>
+<h2>
+    Hello {{ user }}, You are {% if user.is_authenticated %}{% else %}not{% endif %} logged.
+</h2>
 {% if apps %}
     <ul>
-    {% for app in apps %}
-        <li>
-            <a href="{{app.url}}">{{app.name}}</a>
-        </li>
-    {% endfor %}
+        {% for app in apps %}
+            <li>
+                <a href="{{ app.url }}">{{ app.name }}</a>
+            </li>
+        {% endfor %}
     </ul>
 
 {% else %}
-no app found
+    no app found
 {% endif %}
 </body>
 </html>
