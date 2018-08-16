@@ -63,15 +63,18 @@ urlpatterns = [
     url(r'^filetrans/', include('filetrans.urls')),
     #####################################
 
-
     #######  url for all   ##########
     url(r'^', include('all.urls')),
     #################################
 
+    #######  url for myuser   ##########
+    url(r'^myuser/', include('myuser.urls.views_urls')),
+    # url(r'^api/myuser/', include('myuser.urls.api_urls')),
+    #################################
 
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
+#                + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

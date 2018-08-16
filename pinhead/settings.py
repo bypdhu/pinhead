@@ -14,6 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_DIR = os.path.dirname(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -41,6 +42,8 @@ INSTALLED_APPS = [
     'pagetest.apps.PagetestConfig',
     'restapp.apps.RestappConfig',
     'filetrans.apps.FiletransConfig',
+    'myuser.apps.MyuserConfig',
+    'common.apps.CommonConfig',
 
     'rest_framework',
 
@@ -79,6 +82,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'pinhead.urls'
 
+AUTH_USER_MODEL = 'myuser.User'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -114,6 +119,11 @@ DATABASES = {
         'PASSWORD': 'root',
         'HOST': '10.99.70.38',
         'PORT': '3306',
+        'ATOMIC_REQUESTS': True,
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            'charset': 'utf8mb4',
+        }
     }
 }
 
@@ -153,6 +163,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(PROJECT_DIR, "data", "static")
+STATIC_DIR = os.path.join(BASE_DIR, "static")
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
@@ -181,3 +193,6 @@ EMAIL_PORT = 25  # default 25
 EMAIL_HOST_USER = 'bianyunpeng@ehousechina.com'
 EMAIL_HOST_PASSWORD = '******'
 # EMAIL_USE_SSL = True
+
+
+DEFAULT_EXPIRED_YEARS = 70

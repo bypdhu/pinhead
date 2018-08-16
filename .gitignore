@@ -98,3 +98,4 @@ ENV/
 *.pyc
 test.py
 migrations/
+/cart/migrations/

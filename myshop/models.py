@@ -2,7 +2,8 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.core.urlresolvers import reverse
+from django.urls import reverse
+
 
 # 一对多的关系：一个产品可以属于一个分类，一个分类可以包含多个产品。
 # 
@@ -16,19 +17,19 @@ class Category(models.Model):
     slug = models.SlugField(max_length=255, db_index=True, unique=True)
 
     class Meta:
-        ordering = ('name', )
+        ordering = ('name',)
         verbose_name = 'category'
         verbose_name_plural = 'categories'
-        
+
     def __str__(self):
         return self.name
-    
+
     def get_absolute_url(self):
         return reverse('shop:product_list_by_category', args=[self.slug])
-    
+
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, related_name='products')
+    category = models.ForeignKey(Category, related_name='products', on_delete=models.PROTECT)
     name = models.CharField(max_length=127, db_index=True)
     slug = models.SlugField(max_length=255, db_index=True)
     image = models.ImageField(upload_to='myshop/products/%Y/%m/%d', blank=True)
@@ -38,11 +39,11 @@ class Product(models.Model):
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    
+
     class Meta:
-        ordering = ('name', )
-        index_together = (('id', 'slug'), )
-    
+        ordering = ('name',)
+        index_together = (('id', 'slug'),)
+
     def __str__(self):
         return self.name
 

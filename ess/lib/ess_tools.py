@@ -484,7 +484,7 @@ def test():
     # print(kwargs)
     # print(type(kwargs.get("headers")))
 
-    print ml.get_variables_from_yaml("..\\Variables\\constants_test.yml")
+    print(ml.get_variables_from_yaml("..\\Variables\\constants_test.yml"))
 
 
 def test_for_put_test():
@@ -676,4 +676,4 @@ if __name__ == '__main__':
     # test_for_get_test()
     # aa= get_file_from_ess("http://jobs.ess.ejucloud.cn/1512544662421398765", '1512544662421398765.txt', bucket_name='jobs')
     # print(aa)
-    print get_bucket_from_url("http://jobs.ess.ddd/cjoa")
+    print(get_bucket_from_url("http://jobs.ess.ddd/cjoa"))

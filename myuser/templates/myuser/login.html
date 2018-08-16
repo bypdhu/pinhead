@@ -1,0 +1,26 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pinhead</title>
+    {% include '_head_css_js.html' %}
+
+</head>
+<body>
+<form class="m-t" role="form" method="post" action="">
+    {% csrf_token %}
+    <div class="form-group">
+        <input type="text" class="form-control" name="{{ form.username.html_name }}"
+               placeholder="{% trans 'Username' %}" required=""
+               value="{% if form.username.value %}{{ form.username.value }}{% endif %}"/>
+    </div>
+    <div class="form-group">
+        <input type="password" class="form-control" name="{{ form.password.html_name }}"
+               placeholder="{% trans 'Password' %}" required=""/>
+    </div>
+    <button type="submit" class="btn btn-primary">{% trans 'Login' %}</button>
+</form>
+</body>
+</html>
