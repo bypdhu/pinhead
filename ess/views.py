@@ -40,9 +40,10 @@ def get_download_url_history(request):
                 urls_del_multi[url] = u
         else:
             urls_del_multi.update({url: u})
-    print(urls_del_multi)
-
-    return HttpResponse(json.dumps({'histories': urls_del_multi.values()}), content_type="application/json")
+        print(urls_del_multi)
+    if not urls_del_multi:
+        return HttpResponse(json.dumps({'histories': []}), content_type="application/json")
+    return HttpResponse(json.dumps({'histories': list(urls_del_multi.values())}), content_type="application/json")
 
 
 def get_one_download_url_history(request, url):
@@ -81,7 +82,7 @@ def get_file_content_from_url(request):
     with open(file_pn, 'rb') as content:
         file_content = content.read()
     # print(file_content)
-    resp = {'status': 0, 'content': file_content, 'request_origin': request.body}
+    resp = {'status': 0, 'content': file_content.decode('utf-8', 'backslashreplace')}
     response = HttpResponse(json.dumps(resp), content_type='application/json')
 
     # when success, record this url. TODO. record success/fail
@@ -142,8 +143,6 @@ def create_bucket(request):
         return HttpResponse(json.dumps({'status': 2, 'msg': 'fail to create bucket!!'}),
                             content_type='application/json')
 
-    response = HttpResponse(json.dumps({'status': 0, 'msg': 'success', 'request_origin': request.body}),
+    response = HttpResponse(json.dumps({'status': 0, 'msg': 'success'}),
                             content_type='application/json')
     return response
-
-

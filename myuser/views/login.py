@@ -12,12 +12,13 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 
 from .. import forms
 from ..utils import set_tmp_user_to_cache, get_user_or_tmp_user
 
-__all__ = ['UserLoginView']
+__all__ = ['UserLoginView', 'UserLogoutView']
 
 
 class UserLoginView(FormView):
@@ -49,3 +50,23 @@ class UserLoginView(FormView):
 
         auth_login(self.request, user)
         return reverse('all:index')
+
+
+class UserLogoutView(TemplateView):
+    template_name = 'flash_message_standalone.html'
+
+    def get(self, request, *args, **kwargs):
+        auth_logout(request)
+        response = super().get(request, *args, **kwargs)
+        return response
+
+    def get_context_data(self, **kwargs):
+        context = {
+            'title': _("Logout success"),
+            'message': _('Logout succcess, return login page'),
+            'interval': 1,
+            'redirect_url': reverse('myuser:login'),
+            'auto_redirect': True,
+        }
+        kwargs.update(context)
+        return super().get_context_data(**kwargs)

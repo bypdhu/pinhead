@@ -101,7 +101,7 @@ class Tools(object):
         canonicalized_resource= "/"  + ((bucketName != null) ? bucketName + "/" : "")  + ((key != null ? key : ""));
         :return:
         """
-        access_key_secret = str(kwargs.get("AccessKeySecret", ""))
+        access_key_secret = kwargs.get("AccessKeySecret", "")
         method = str(kwargs.get("Method")).upper()
         content_md5 = str(kwargs.get("Content-MD5", ""))
         content_type = str(kwargs.get("Content-Type", ""))
@@ -119,7 +119,8 @@ class Tools(object):
                    + canonicalized_resource
         # print(type(pre_sign))
         print("pre signature is: {0}".format(pre_sign))
-        signature = base64.b64encode(hmac.new(access_key_secret, pre_sign, digestmod=hashlib.sha1).digest())
+        signature = base64.b64encode(
+            hmac.new(access_key_secret.encode('utf8'), pre_sign.encode('utf8'), digestmod=hashlib.sha1).digest())
         print("signature is: {0}".format(signature))
         return signature
 
@@ -167,7 +168,7 @@ class Tools(object):
 
     def get_dict_from_string(self, s):
         if s:
-            if isinstance(s, unicode):
+            if isinstance(s, bytes):
                 s = ast.literal_eval(s)
             elif isinstance(s, str):
                 s = eval(s)
@@ -183,7 +184,7 @@ class Tools(object):
 
     def handle_http_kwargs(self, kwargs):
         if kwargs.get("headers", ""):
-            if isinstance(kwargs.get("headers"), unicode):
+            if isinstance(kwargs.get("headers"), bytes):
                 kwargs["headers"] = ast.literal_eval(kwargs.get("headers"))
             elif isinstance(kwargs.get("headers"), str):
                 kwargs["headers"] = eval(kwargs.get("headers"))
